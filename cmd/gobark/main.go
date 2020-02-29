@@ -19,27 +19,20 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
 	log.Printf("Ready")
-
 	for {
 		newerTriggerData, err := ioutil.ReadFile(TRIGGER_PATH)
 		if err != nil {
 			panic(err)
 		}
-
 		if bytes.Compare(triggerData, newerTriggerData) != 0 {
 			log.Printf("Triggered")
-
 			if err := exec.Command(FMEDIA_EXECUTABLE, PAYLOAD_PATH).Run(); err != nil {
 				panic(err)
 			}
-
 			triggerData = newerTriggerData
-
 			log.Printf("Ready")
 		}
-
 		time.Sleep(time.Second)
 	}
 }
